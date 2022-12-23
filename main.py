@@ -1,6 +1,6 @@
 from typing import List
 
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, Path
 from shemas import Book
 
 
@@ -17,3 +17,6 @@ def get_book(q: List[str] = Query(['test1', 'test2'], description='Search book',
     return q
 
 
+@app.get('/book/{pk}')
+def get_single_book(pk: int = Path(..., gt=1, le=20), pages: int = Query(None, gt=10, le=500)):
+    return {'pk': pk, 'pages': pages}
